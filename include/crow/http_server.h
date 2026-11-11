@@ -327,10 +327,12 @@ namespace crow // NOTE: Already documented in "crow/app.h"
             {
                 size_t context_idx = pick_io_context_idx();
                 asio::io_context& ic = *io_context_pool_[context_idx];
+
+// The code that needs modification
                 auto p = std::make_shared<Connection<Adaptor, Handler, Middlewares...>>(
                     ic, handler_, server_name_, middlewares_,
                     get_cached_date_str_pool_[context_idx], *task_timer_pool_[context_idx], adaptor_ctx_, task_queue_length_pool_[context_idx]);
-                    
+// END
                 CROW_LOG_DEBUG << &ic << " {" << context_idx << "} queue length: " << task_queue_length_pool_[context_idx];
 
                 acceptor_.raw_acceptor().async_accept(
